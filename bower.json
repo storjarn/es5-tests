@@ -1,0 +1,26 @@
+{
+  "name": "es5-tests",
+  "version": "0.0.0",
+  "homepage": "https://github.com/storjarn/es5-tests",
+  "authors": [
+    "Christopher Maples <chris.maples@logicnow.com>"
+  ],
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "mocha": "~2.0.1",
+    "expect.js": "Automattic/expect.js#~0.3.1"
+  }
+}

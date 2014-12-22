@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ECMAScript 5 tests</title>
+        <link rel="stylesheet" href="./bower_components/mocha/mocha.css">
+        <script src="./bower_components/mocha/mocha.js" type="text/javascript" charset="utf-8"></script>
+        <script src="./bower_components/expect.js/index.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+    <body>
+        <div id="mocha"></div>
+    </body>
+    <script>
+        mocha.setup('bdd');
+        mocha.checkLeaks();
+
+        describe("defineProperty", function() {
+            describe("writable", function() {
+                var o = {};
+
+                it("should be non-writable", function() {
+                    Object.defineProperty(o, "test", {
+                      writable: false,
+                      value: 123
+                    });
+                    // o.test; // 123
+                    expect(o.test).to.equal(123);
+                    o.test = 456; // no error at all
+                    // o.test; // 123
+                    expect(o.test).to.equal(123);
+                });
+
+                it("should throw an error reconfiguring a non-writable property", function() {
+                    expect(function(){
+                        Object.defineProperty(o, "test", {
+                          writable: false,
+                          value: 456
+                        });
+                        // throws
+                        // Attempting to change value of a readonly property.
+                    }).to.throwError();
+                });
+            });
+
+            describe("configurable", function() {
+                var o = Object.defineProperty({}, "test", {
+                  enumerable: false,
+                  writable: true,
+                  configurable: false, // note, it's false
+                  value: 123
+                });
+
+                it("writable true should be reconfigurable, even if configurable is false", function() {
+                    Object.defineProperty(o, "test", {
+                      enumerable: false,
+                      writable: false, // note, this is false only now
+                      configurable: false,
+                      value: "456" // note, type and value is different
+                    });
+
+                    // did I re-configure it ?
+                    expect(o.test === "456").to.be.ok(); // true !!!
+                });
+
+                it("is how we expect to be if we don't define the property using defineProperty", function() {
+                    // simple object
+                    var o2 = {};
+
+                    // simple assignment
+                    o2.test = 123;
+
+                    // equivalent in Object.defineProperty world
+                    Object.defineProperty(o2, "test", {
+                      configurable: true,
+                      writable: true,
+                      enumerable: true,
+                      value: 123
+                    });
+                });
+
+                it("defaults are false if not explicitly true when using defineProperty", function() {
+                    // simple object
+                    var o3 = {};
+
+                    Object.defineProperty(o3, "test", {
+                      // configurable: true,
+                      enumerable: false,
+                      value: 123
+                    });
+
+                    o3.test = "456";
+
+                    expect(o3.test === 123).to.be.ok(); // true !!!
+
+                    expect(function(){
+                        Object.defineProperty(o3, "test", {
+                          configurable: true,
+                          writable: true,
+                          enumerable: true,
+                          value: 123
+                        });
+                        // throws
+                    }).to.throwError();
+                });
+            });
+        });
+
+        mocha.run();
+    </script>
+</html>

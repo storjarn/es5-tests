@@ -1,0 +1,23 @@
+{
+  "name": "es5-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/storjarn/es5-tests.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/storjarn/es5-tests/issues"
+  },
+  "homepage": "https://github.com/storjarn/es5-tests",
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "http-server": "^0.7.4"
+  }
+}
